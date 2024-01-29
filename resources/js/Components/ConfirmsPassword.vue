@@ -1,8 +1,8 @@
 <script setup>
 import axios from 'axios'
 import { nextTick, reactive, ref } from 'vue'
+import route from 'ziggy-js'
 
-// import route from 'ziggy-js'
 import DialogModal from './DialogModal.vue'
 import InputError from './InputError.vue'
 import PrimaryButton from './PrimaryButton.vue'
