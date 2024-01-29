@@ -36,7 +36,7 @@ class Chore extends Model
     /**
      * Get the children for the chore.
      */
-    public function children(): BelongsToMany
+    public function assignee(): BelongsToMany
     {
         return $this->belongsToMany(Child::class);
     }

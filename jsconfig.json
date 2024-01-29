@@ -1,9 +1,13 @@
 {
-    "compilerOptions": {
-        "baseUrl": ".",
-        "paths": {
-            "@/*": ["resources/js/*"]
-        }
+  "compilerOptions": {
+    "baseUrl": ".",
+    "target": "es6",
+    "module": "commonjs",
+    "checkJs": true,
+    "paths": {
+      "@/*": ["resources/js/*"],
     },
-    "exclude": ["node_modules", "public"]
+  },
+  "include": ["src/**/*.js", "src/**/*.vue"],
+  "exclude": ["node_modules", "public"],
 }
