@@ -22,6 +22,7 @@ namespace App\Models{
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Chore> $chores
  * @property-read int|null $chores_count
+ * @property-read \App\Models\User|null $user
  * @method static \Database\Factories\ChildFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|Child newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Child newQuery()
@@ -43,13 +44,13 @@ namespace App\Models{
  * @property int $id
  * @property string $uuid
  * @property string $name
- * @property int $chore_category_id
+ * @property int|null $chore_category_id
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Child> $assignee
+ * @property-read int|null $assignee_count
  * @property-read \App\Models\ChoreCategory|null $category
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Child> $children
- * @property-read int|null $children_count
  * @method static \Database\Factories\ChoreFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|Chore newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Chore newQuery()

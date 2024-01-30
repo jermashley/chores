@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreChildRequest;
 use App\Http\Requests\UpdateChildRequest;
 use App\Models\Child;
+use Illuminate\Support\Facades\Auth;
+use Inertia\Inertia;
 
 class ChildController extends Controller
 {
@@ -13,7 +15,11 @@ class ChildController extends Controller
      */
     public function index()
     {
-        //
+        $children = Child::whereUserId(Auth::id())->get();
+
+        return Inertia::render('Children/Index', [
+            'children' => $children,
+        ]);
     }
 
     /**
@@ -21,7 +27,7 @@ class ChildController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('Children/Create');
     }
 
     /**
@@ -29,7 +35,9 @@ class ChildController extends Controller
      */
     public function store(StoreChildRequest $request)
     {
-        //
+        $child = Child::create($request->validated());
+
+        return $child;
     }
 
     /**
