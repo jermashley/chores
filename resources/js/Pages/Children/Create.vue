@@ -1,11 +1,9 @@
 <script setup>
 import { Link, useForm } from '@inertiajs/vue3'
+import route from 'ziggy-js'
 
-import Card from '@/Components/Card.vue'
-import InputError from '@/Components/InputError.vue'
-import InputLabel from '@/Components/InputLabel.vue'
-import PrimaryButton from '@/Components/PrimaryButton.vue'
-import TextInput from '@/Components/TextInput.vue'
+import { Button } from '@/Components/ui/button'
+import { Card, CardContent, CardHeader, CardTitle } from '@/Components/ui/card'
 import AppLayout from '@/Layouts/AppLayout.vue'
 
 const form = useForm({
@@ -28,39 +26,24 @@ const form = useForm({
         <div
           class="overflow-hidden bg-white shadow-xl sm:rounded-lg dark:bg-gray-800"
         >
-          <Card>
-            <form @submit.prevent="submit">
-              <div>
-                <InputLabel for="name" value="Name" />
-                <TextInput
-                  id="name"
-                  v-model="form.name"
-                  type="text"
-                  class="mt-1 block w-full"
-                  required
-                  autofocus
-                  autocomplete="name"
-                />
-                <InputError class="mt-2" :message="form.errors.name" />
-              </div>
+          <Card class="mx-auto w-full md:max-w-96">
+            <CardHeader>
+              <CardTitle>Create child</CardTitle>
 
-              <div class="mt-4 flex items-center justify-end">
-                <Link
-                  :href="route('dashboard')"
-                  class="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:text-gray-400 dark:hover:text-gray-100 dark:focus:ring-offset-gray-800"
-                >
-                  Cancel
-                </Link>
+              <CardDescription>Add a new child to your family.</CardDescription>
+            </CardHeader>
 
-                <PrimaryButton
-                  class="ms-4"
-                  :class="{ 'opacity-25': form.processing }"
-                  :disabled="form.processing"
-                >
-                  Save
-                </PrimaryButton>
-              </div>
-            </form>
+            <CardContent>
+              <form @submit.prevent=""></form>
+            </CardContent>
+
+            <CardFooter class="flex justify-end space-x-2 px-6 pb-6">
+              <Button variant="outline" as-child>
+                <Link :href="route('child.index')"> Cancel </Link>
+              </Button>
+
+              <Button type="submit">Deploy</Button>
+            </CardFooter>
           </Card>
         </div>
       </div>
