@@ -35,9 +35,14 @@ class ChildController extends Controller
      */
     public function store(StoreChildRequest $request)
     {
-        $child = Child::create($request->validated());
+        $child = Child::create([
+            'name' => $request->input('name'),
+            'user_id' => Auth::id(),
+        ]);
 
-        return $child;
+        $child->saveOrFail();
+
+        return redirect()->route('child.index');
     }
 
     /**
@@ -45,7 +50,9 @@ class ChildController extends Controller
      */
     public function show(Child $child)
     {
-        //
+        return Inertia::render('Children/Show', [
+            'child' => $child,
+        ]);
     }
 
     /**
@@ -53,7 +60,9 @@ class ChildController extends Controller
      */
     public function edit(Child $child)
     {
-        //
+        return Inertia::render('Children/Edit', [
+            'child' => $child,
+        ]);
     }
 
     /**
@@ -61,7 +70,9 @@ class ChildController extends Controller
      */
     public function update(UpdateChildRequest $request, Child $child)
     {
-        //
+        $child->update($request->validated());
+
+        return redirect()->route('child.index');
     }
 
     /**
@@ -69,6 +80,8 @@ class ChildController extends Controller
      */
     public function destroy(Child $child)
     {
-        //
+        $child->delete();
+
+        return redirect()->route('child.index');
     }
 }

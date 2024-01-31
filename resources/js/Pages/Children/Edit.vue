@@ -1,5 +1,5 @@
 <script setup>
-import { Link, useForm } from '@inertiajs/vue3'
+import { Link, router, useForm } from '@inertiajs/vue3'
 import route from 'ziggy-js'
 
 import { Button } from '@/Components/ui/button'
@@ -8,27 +8,32 @@ import { Input } from '@/Components/ui/input'
 import { Label } from '@/Components/ui/label'
 import AppLayout from '@/Layouts/AppLayout.vue'
 
+const props = defineProps({
+  child: {
+    type: Object,
+    required: true,
+  },
+})
+
 const form = useForm({
-  name: ``,
+  name: props.child.name,
 })
 
 const submit = () => {
-  form.post(route(`child.store`), {
+  form.put(route(`child.update`, { child: props.child.id }), {
     onFinish: () => form.reset(`name`),
   })
+}
+
+const handleDelete = () => {
+  console.log(`Delete: ${props.child.name}`)
+  console.log(route(`child.destroy`, { child: props.child.id }))
+  router.delete(route(`child.destroy`, { child: props.child.id }))
 }
 </script>
 
 <template>
-  <AppLayout title="Create Child">
-    <template #header>
-      <h2
-        class="text-xl font-semibold leading-tight text-gray-800 dark:text-gray-200"
-      >
-        Create Child
-      </h2>
-    </template>
-
+  <AppLayout title="Edit Child">
     <div class="py-12">
       <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
         <div
@@ -36,13 +41,13 @@ const submit = () => {
         >
           <Card class="mx-auto w-full md:max-w-96">
             <CardHeader>
-              <CardTitle>Create child</CardTitle>
+              <CardTitle>Edit child</CardTitle>
 
-              <CardDescription>Add a new child to your family.</CardDescription>
+              <CardDescription>Edit a child's information.</CardDescription>
             </CardHeader>
 
             <CardContent>
-              <form id="createChildForm" @submit.prevent="submit">
+              <form id="editChildForm" @submit.prevent="submit">
                 <div class="grid w-full max-w-sm items-center gap-1.5">
                   <Label for="name">Name</Label>
 
@@ -57,6 +62,10 @@ const submit = () => {
             </CardContent>
 
             <CardFooter class="flex justify-end space-x-2 px-6 pb-6">
+              <Button variant="destructive" @click="handleDelete">
+                Delete
+              </Button>
+
               <Button variant="outline" as-child>
                 <Link :href="route('child.index')">Cancel</Link>
               </Button>
@@ -64,9 +73,10 @@ const submit = () => {
               <Button
                 type="submit"
                 :disabled="form.processing"
-                form="createChildForm"
-                >Create</Button
+                form="editChildForm"
               >
+                Save
+              </Button>
             </CardFooter>
           </Card>
         </div>
