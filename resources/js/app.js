@@ -2,6 +2,7 @@ import './bootstrap'
 import '../css/app.css'
 
 import { createInertiaApp } from '@inertiajs/vue3'
+import { VueQueryPlugin } from '@tanstack/vue-query'
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers'
 import { createApp, h } from 'vue'
 
@@ -19,6 +20,7 @@ createInertiaApp({
   setup({ el, App, props, plugin }) {
     return createApp({ render: () => h(App, props) })
       .use(plugin)
+      .use(VueQueryPlugin)
       .use(ZiggyVue)
       .mount(el)
   },

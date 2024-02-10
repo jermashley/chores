@@ -5,7 +5,6 @@
     "baseUrl": ".",
     "target": "es6",
     "module": "commonjs",
-    "checkJs": true,
     "paths": {
       "@/*": ["resources/js/*"],
     },

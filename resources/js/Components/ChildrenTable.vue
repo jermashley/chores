@@ -1,61 +1,3 @@
-<script setup>
-import { Link } from '@inertiajs/vue3'
-import { FlexRender, getCoreRowModel, useVueTable } from '@tanstack/vue-table'
-import { h } from 'vue'
-
-import { Button } from '@/Components/ui/button'
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '@/Components/ui/table'
-
-const props = defineProps({
-  data: {
-    type: Array,
-    required: true,
-  },
-})
-
-const tableColumns = [
-  {
-    accessorKey: `name`,
-    header: `Name`,
-    cell: ({ row }) => {
-      return h(`div`, { class: `w-full` }, row.getValue(`name`))
-    },
-  },
-  {
-    id: `actions`,
-    enableHeading: false,
-    cell: ({ row }) => {
-      return h(
-        `div`,
-        { class: `flex flex-row justify-end` },
-        h(
-          Button,
-          { asChild: true, size: `sm` },
-          h(Link, { href: `/child/${row.original.id}/edit` }, `Edit`),
-        ),
-      )
-    },
-  },
-]
-
-const table = useVueTable({
-  get data() {
-    return props.data
-  },
-  get columns() {
-    return tableColumns
-  },
-  getCoreRowModel: getCoreRowModel(),
-})
-</script>
-
 <template>
   <Table class="mx-auto max-w-2xl">
     <TableHeader>
@@ -99,3 +41,57 @@ const table = useVueTable({
     </TableBody>
   </Table>
 </template>
+
+<script setup>
+import { Link } from '@inertiajs/vue3'
+import { FlexRender, getCoreRowModel, useVueTable } from '@tanstack/vue-table'
+import { h } from 'vue'
+
+import EditChildDialog from '@/Components/Feature/Child/EditChildDialog.vue'
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/Components/ui/table'
+
+const props = defineProps({
+  data: {
+    type: Array,
+    required: true,
+  },
+})
+
+const tableColumns = [
+  {
+    accessorKey: `name`,
+    header: `Name`,
+    cell: ({ row }) => {
+      return h(`div`, { class: `w-full` }, row.getValue(`name`))
+    },
+  },
+  {
+    id: `actions`,
+    enableHeading: false,
+    cell: ({ row }) => {
+      return h(
+        `div`,
+        { class: `flex flex-row justify-end` },
+        h(EditChildDialog, { child: row.original, size: `sm` }),
+      )
+    },
+  },
+]
+
+const table = useVueTable({
+  get data() {
+    return props.data
+  },
+  get columns() {
+    return tableColumns
+  },
+  getCoreRowModel: getCoreRowModel(),
+})
+</script>

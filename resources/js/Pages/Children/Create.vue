@@ -32,7 +32,7 @@ const submit = () => {
     <div class="py-12">
       <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
         <div
-          class="overflow-hidden bg-white shadow-xl sm:rounded-lg dark:bg-gray-800"
+          class="overflow-hidden bg-white shadow-xl dark:bg-gray-800 sm:rounded-lg"
         >
           <Card class="mx-auto w-full md:max-w-96">
             <CardHeader>

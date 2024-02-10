@@ -18,7 +18,8 @@ class User extends Authenticatable
 {
     use HasApiTokens;
     use HasFactory;
-    use HasProfilePhoto;
+
+    // use HasProfilePhoto;
     use HasUuid;
     use Notifiable;
     use SoftDeletes;
@@ -63,8 +64,29 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $appends = [
-        'profile_photo_url',
+        'full_name',
+        'initials',
     ];
+
+    /**
+     * Get the user's full name.
+     *
+     * @return string
+     */
+    public function getFullNameAttribute()
+    {
+        return "{$this->first_name} {$this->last_name}";
+    }
+
+    /**
+     * Get the user's initials.
+     *
+     * @return string
+     */
+    public function getInitialsAttribute()
+    {
+        return strtoupper(substr($this->first_name, 0, 1).substr($this->last_name, 0, 1));
+    }
 
     /**
      * Get the children associated with the user.

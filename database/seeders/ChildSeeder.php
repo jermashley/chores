@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Child;
 use Illuminate\Database\Seeder;
 
 class ChildSeeder extends Seeder
@@ -12,6 +12,6 @@ class ChildSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        Child::factory(15)->create();
     }
 }

@@ -1,3 +1,40 @@
+<template>
+  <AppLayout title="Edit Child">
+    <Card class="mx-auto w-full md:max-w-96">
+      <CardHeader>
+        <CardTitle>Edit child</CardTitle>
+
+        <CardDescription>Edit a child's information.</CardDescription>
+      </CardHeader>
+
+      <CardContent>
+        <form id="editChildForm" @submit.prevent="submit">
+          <div class="grid w-full max-w-sm items-center gap-1.5">
+            <Label for="name">Name</Label>
+
+            <Input
+              id="name"
+              v-model="form.name"
+              type="text"
+              placeholder="Emmy"
+            />
+          </div>
+        </form>
+      </CardContent>
+
+      <CardFooter class="flex justify-end space-x-2 px-6 pb-6">
+        <Button variant="outline" as-child>
+          <Link :href="route('child.index')">Cancel</Link>
+        </Button>
+
+        <Button type="submit" :disabled="form.processing" form="editChildForm">
+          Save
+        </Button>
+      </CardFooter>
+    </Card>
+  </AppLayout>
+</template>
+
 <script setup>
 import { Link, router, useForm } from '@inertiajs/vue3'
 import route from 'ziggy-js'
@@ -24,63 +61,4 @@ const submit = () => {
     onFinish: () => form.reset(`name`),
   })
 }
-
-const handleDelete = () => {
-  console.log(`Delete: ${props.child.name}`)
-  console.log(route(`child.destroy`, { child: props.child.id }))
-  router.delete(route(`child.destroy`, { child: props.child.id }))
-}
 </script>
-
-<template>
-  <AppLayout title="Edit Child">
-    <div class="py-12">
-      <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
-        <div
-          class="overflow-hidden bg-white shadow-xl sm:rounded-lg dark:bg-gray-800"
-        >
-          <Card class="mx-auto w-full md:max-w-96">
-            <CardHeader>
-              <CardTitle>Edit child</CardTitle>
-
-              <CardDescription>Edit a child's information.</CardDescription>
-            </CardHeader>
-
-            <CardContent>
-              <form id="editChildForm" @submit.prevent="submit">
-                <div class="grid w-full max-w-sm items-center gap-1.5">
-                  <Label for="name">Name</Label>
-
-                  <Input
-                    id="name"
-                    v-model="form.name"
-                    type="text"
-                    placeholder="Emmy"
-                  />
-                </div>
-              </form>
-            </CardContent>
-
-            <CardFooter class="flex justify-end space-x-2 px-6 pb-6">
-              <Button variant="destructive" @click="handleDelete">
-                Delete
-              </Button>
-
-              <Button variant="outline" as-child>
-                <Link :href="route('child.index')">Cancel</Link>
-              </Button>
-
-              <Button
-                type="submit"
-                :disabled="form.processing"
-                form="editChildForm"
-              >
-                Save
-              </Button>
-            </CardFooter>
-          </Card>
-        </div>
-      </div>
-    </div>
-  </AppLayout>
-</template>
