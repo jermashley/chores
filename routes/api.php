@@ -1,6 +1,8 @@
 <?php
 
-use App\Http\Controllers\Api\ChildrenController;
+use App\Http\Controllers\Api\ChildChoreController;
+use App\Http\Controllers\Api\ChildController;
+use App\Http\Controllers\Api\ChoreController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -25,5 +27,9 @@ Route::middleware([
     'verified',
 ])
     ->group(function () {
-        Route::apiResource('children', ChildrenController::class);
+        Route::apiResource('child', ChildController::class);
+        Route::apiResource('chore', ChoreController::class);
+
+        Route::post('childChore/{child}/attach/{chore}', [ChildChoreController::class, 'attach'])->name('childChore.attach');
+        Route::post('childChore/{child}/detach/{chore}', [ChildChoreController::class, 'detach'])->name('childChore.detach');
     });

@@ -68,8 +68,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/Components/ui/dropdown-menu'
-
-import DropdownMenuGroup from '../ui/dropdown-menu/DropdownMenuGroup.vue'
+import DropdownMenuGroup from '@/Components/ui/dropdown-menu/DropdownMenuGroup.vue'
 
 const { app, auth } = usePage().props
 

@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\ChildController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -24,5 +23,7 @@ Route::middleware([
         return Inertia::render('Index');
     });
 
-    Route::resource('child', ChildController::class);
+    Route::get('/chores', function () {
+        return Inertia::render('Chores');
+    })->name('chores');
 });

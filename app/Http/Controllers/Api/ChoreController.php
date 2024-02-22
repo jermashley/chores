@@ -1,10 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreChoreRequest;
 use App\Http\Requests\UpdateChoreRequest;
 use App\Models\Chore;
+use Illuminate\Support\Facades\Auth;
+use Symfony\Component\HttpFoundation\Response;
 
 class ChoreController extends Controller
 {
@@ -13,15 +16,9 @@ class ChoreController extends Controller
      */
     public function index()
     {
-        //
-    }
+        $chores = Chore::whereId(Auth::id())->get();
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        return response()->json($chores, Response::HTTP_OK);
     }
 
     /**
@@ -29,7 +26,9 @@ class ChoreController extends Controller
      */
     public function store(StoreChoreRequest $request)
     {
-        //
+        $chore = Chore::create($request->validated());
+
+        return response()->json($chore, Response::HTTP_CREATED);
     }
 
     /**
@@ -37,15 +36,7 @@ class ChoreController extends Controller
      */
     public function show(Chore $chore)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Chore $chore)
-    {
-        //
+        return response()->json($chore, Response::HTTP_OK);
     }
 
     /**
@@ -53,7 +44,9 @@ class ChoreController extends Controller
      */
     public function update(UpdateChoreRequest $request, Chore $chore)
     {
-        //
+        $chore->update($request->validated());
+
+        return response()->json($chore, Response::HTTP_OK);
     }
 
     /**
@@ -61,6 +54,8 @@ class ChoreController extends Controller
      */
     public function destroy(Chore $chore)
     {
-        //
+        $chore->delete();
+
+        return response()->json(null, Response::HTTP_NO_CONTENT);
     }
 }

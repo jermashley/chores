@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreChildRequest;
 use App\Http\Requests\UpdateChildRequest;
 use App\Models\Child;
 use Illuminate\Support\Facades\Auth;
-use Inertia\Inertia;
+use Symfony\Component\HttpFoundation\Response;
 
 class ChildController extends Controller
 {
@@ -15,19 +16,11 @@ class ChildController extends Controller
      */
     public function index()
     {
-        $children = Child::whereUserId(Auth::id())->get();
+        $children = Child::whereUserId(Auth::id())
+            ->with('chores')
+            ->get();
 
-        return Inertia::render('Children/Index', [
-            'children' => $children,
-        ]);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        return Inertia::render('Children/Create');
+        return response()->json($children, Response::HTTP_OK);
     }
 
     /**
@@ -42,7 +35,7 @@ class ChildController extends Controller
 
         $child->saveOrFail();
 
-        return redirect()->route('child.index');
+        return response()->json($child, Response::HTTP_CREATED);
     }
 
     /**
@@ -50,19 +43,7 @@ class ChildController extends Controller
      */
     public function show(Child $child)
     {
-        return Inertia::render('Children/Show', [
-            'child' => $child,
-        ]);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Child $child)
-    {
-        return Inertia::render('Children/Edit', [
-            'child' => $child,
-        ]);
+        return response()->json($child, Response::HTTP_OK);
     }
 
     /**
@@ -72,7 +53,7 @@ class ChildController extends Controller
     {
         $child->update($request->validated());
 
-        return redirect()->route('child.index');
+        return response()->json($child, Response::HTTP_OK);
     }
 
     /**
@@ -82,6 +63,6 @@ class ChildController extends Controller
     {
         $child->delete();
 
-        return redirect()->route('child.index');
+        return response()->json(null, Response::HTTP_NO_CONTENT);
     }
 }

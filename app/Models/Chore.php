@@ -25,6 +25,11 @@ class Chore extends Model
         'chore_category_id',
     ];
 
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
+
     /**
      * Get the category that owns the chore.
      */

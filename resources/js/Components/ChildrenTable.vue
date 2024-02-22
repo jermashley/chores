@@ -43,7 +43,6 @@
 </template>
 
 <script setup>
-import { Link } from '@inertiajs/vue3'
 import { FlexRender, getCoreRowModel, useVueTable } from '@tanstack/vue-table'
 import { h } from 'vue'
 

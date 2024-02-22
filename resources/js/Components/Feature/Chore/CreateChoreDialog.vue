@@ -1,22 +1,20 @@
 <template>
-  <Dialog v-model:open="dialogIsOpen">
+  <Dialog :open="dialogIsOpen">
     <DialogTrigger as-child>
-      <Button variant="outline" :size="size">
-        <slot name="trigger">Edit</slot>
+      <Button :size="size" @click="dialogIsOpen = !dialogIsOpen">
+        <slot>Create</slot>
       </Button>
     </DialogTrigger>
 
     <DialogContent>
       <DialogHeader>
-        <DialogTitle>{{ child.name }}</DialogTitle>
+        <DialogTitle>Create Chore</DialogTitle>
 
-        <DialogDescription>
-          Edit {{ child.name }}'s information.
-        </DialogDescription>
+        <DialogDescription>Create a new chore.</DialogDescription>
       </DialogHeader>
 
       <div>
-        <form id="editChildForm" @submit.prevent="submit">
+        <form id="createChoreForm" @submit.prevent="submit">
           <div class="grid w-full max-w-sm items-center gap-1.5">
             <LabelVue for="name">Name</LabelVue>
 
@@ -35,7 +33,13 @@
           Cancel
         </Button>
 
-        <Button type="submit" form="editChildForm">Save</Button>
+        <Button
+          type="submit"
+          :disabled="form.processing"
+          form="createChoreForm"
+        >
+          Save
+        </Button>
       </DialogFooter>
     </DialogContent>
   </Dialog>
@@ -43,8 +47,8 @@
 
 <script setup>
 import { useForm } from '@inertiajs/vue3'
-import { useQueryClient } from '@tanstack/vue-query'
 import { ref } from 'vue'
+import route from 'ziggy-js'
 
 import { Button } from '@/Components/ui/button'
 import {
@@ -57,41 +61,27 @@ import {
   DialogTrigger,
 } from '@/Components/ui/dialog'
 import { Input } from '@/Components/ui/input'
-import { useUpdateChild } from '@/Composables/Mutations/children'
 
 const dialogIsOpen = ref(false)
 
-const props = defineProps({
-  child: {
-    type: Object,
-    required: true,
-  },
+defineProps({
   size: {
     type: String,
     required: false,
-    default: `sm`,
+    default: `md`,
   },
-})
-
-const queryClient = useQueryClient()
-
-const childMutation = useUpdateChild({
-  config: {
-    onSuccess: () => {
-      queryClient.invalidateQueries(`children`)
-      dialogIsOpen.value = false
-    },
-  },
-  id: props.child.id,
 })
 
 const form = useForm({
-  name: props.child.name,
+  name: ``,
 })
 
 const submit = () => {
-  childMutation.mutate({
-    formData: form.data(),
+  form.put(route(`chore.create`), {
+    onFinish: () => {
+      form.reset(`name`)
+      dialogIsOpen.value = false
+    },
   })
 }
 </script>

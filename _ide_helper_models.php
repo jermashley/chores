@@ -20,19 +20,24 @@ namespace App\Models{
  * @property string $name
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Chore> $chores
  * @property-read int|null $chores_count
  * @property-read \App\Models\User|null $user
  * @method static \Database\Factories\ChildFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|Child newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Child newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Child onlyTrashed()
  * @method static \Illuminate\Database\Eloquent\Builder|Child query()
  * @method static \Illuminate\Database\Eloquent\Builder|Child whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Child whereDeletedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Child whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Child whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Child whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Child whereUserId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Child whereUuid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Child withTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|Child withoutTrashed()
  */
 	class Child extends \Eloquent {}
 }
@@ -45,12 +50,14 @@ namespace App\Models{
  * @property string $uuid
  * @property string $name
  * @property int|null $chore_category_id
+ * @property int|null $user_id
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Child> $assignee
  * @property-read int|null $assignee_count
  * @property-read \App\Models\ChoreCategory|null $category
+ * @property-read \App\Models\User|null $user
  * @method static \Database\Factories\ChoreFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|Chore newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Chore newQuery()
@@ -62,6 +69,7 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|Chore whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Chore whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Chore whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Chore whereUserId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Chore whereUuid($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Chore withTrashed()
  * @method static \Illuminate\Database\Eloquent\Builder|Chore withoutTrashed()
@@ -120,9 +128,10 @@ namespace App\Models{
  * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Child> $children
  * @property-read int|null $children_count
+ * @property-read string $full_name
+ * @property-read string $initials
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection<int, \Illuminate\Notifications\DatabaseNotification> $notifications
  * @property-read int|null $notifications_count
- * @property-read string $profile_photo_url
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Laravel\Sanctum\PersonalAccessToken> $tokens
  * @property-read int|null $tokens_count
  * @method static \Database\Factories\UserFactory factory($count = null, $state = [])

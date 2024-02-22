@@ -3,7 +3,7 @@ import axios from 'axios'
 import route from 'ziggy-js'
 
 const getChildren = async () => {
-  const data = await axios.get(route(`api.children.index`))
+  const data = await axios.get(route(`api.child.index`))
 
   return data
 }
